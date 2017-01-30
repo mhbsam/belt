@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+    </head>
+    <body>
+        <h3>Success! Welcome, {{ user_name | title }} !</h3>
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+        <!-- <p>Successfully {{request.session.message}}!</p> -->
+
+        <form class="logoff" action="/logoff" method="post">
+            <input type="submit" name="logoff" value="Log off">
+            {% csrf_token %}
+        </form>
+
+    </body>
+</html>
