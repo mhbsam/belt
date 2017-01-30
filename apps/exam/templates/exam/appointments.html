@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>What's Up</title>
+    </head>
+    <style media="screen">
+        .formaddapp{
+            border: 2px solid black;
+            width: 30%;
+        }
+        .appointments{
+            border: 2px solid black;
+            width: 30%;
+        }
+        .future_appointments{
+            border: 2px solid black;
+            width: 30%;
+        }
+    </style>
+    <body>
+        <h3>Hello, {{ user.first_name | title }} !</h3>
+
+        <!-- <p>Successfully {{request.session.message}}!</p> -->
+
+        <form class="logoff" action="/logoff" method="post">
+            <input type="submit" name="logoff" value="Logout">
+            {% csrf_token %}
+        </form>
+
+
+
+        <div class="curapp">
+            <h4>Here are your appointments for today, {{today}}:</h4><br>
+            <table class="appointments">
+                <tr>
+                  <th>Tasks</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+                {% for task in currenttasks reversed %}
+                    <tr>
+                      <td>{{task.task}}</td>
+                      <td>{{task.time}}</td>
+                      <td>{{task.status}}</td>
+                      <td><a href="/edit/{{task.id}}">Edit</a> <a href="/delete/{{task.id}}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+
+        <div class="futapp">
+            <h4>Your other appointments:</h4><br>
+            <table class="future_appointments">
+                <tr>
+                  <th>Tasks</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+                {% for task in futuretasks reversed %}
+                    <tr>
+                      <td>{{task.task}}</td>
+                      <td>{{task.time}}</td>
+                      <td>{{task.status}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="addapp">
+            <h4>Add Appointment</h4>
+            <form class="formaddapp" action="/addapp" method="post">
+                Date :<input type="date" name="date" value=""><br>
+                Time :<input type="time" name="time" value=""><br>
+                {% csrf_token %}
+                Tasks:<input type="text" name="task" value=""><br>
+                <input type="submit" name="add" value="Add">
+            </form>
+        </div>
+
+    </body>
+</html>
