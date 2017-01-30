@@ -22,7 +22,7 @@ def appointments(request):
                 'today': today,
             }
             return render(request, 'exam/appointments.html', context)
-    return redirect('/')
+    return redirect('/')  
 
 
 #========================================================
